@@ -3,6 +3,7 @@ import { TextField } from "@satel/formik-polaris";
 import { Page, Button, FormLayout, Card } from "@shopify/polaris";
 import { Form, Formik } from "formik";
 import { loginSchema } from "../utils/loginSchema";
+import { useRouter } from 'next/router';
 interface valuesType{
   email:string
   password:string
@@ -12,9 +13,9 @@ interface valuesType{
   const handleSubmit = (values: valuesType) => {
     alert(JSON.stringify(values));
   };
-
+  const {push} = useRouter()
   return (
-    <Page title="Clinic" narrowWidth breadcrumbs={[{content:"register" , url:"/register"}]}>
+    <Page title="Clinic" narrowWidth breadcrumbs={[{content:"register" , onAction:()=>push('/register')}]}>
       <Card title="Login" sectioned>
         <Formik
           initialValues={{ email: "", password: "" }}
