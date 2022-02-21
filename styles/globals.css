@@ -14,3 +14,6 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.Polaris-Frame__Navigation{right:0}
+.Polaris-Navigation{border-right: none; border-left: 1px solid gray;}
