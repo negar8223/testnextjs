@@ -16,7 +16,7 @@ import {
   Toast,
   DescriptionList,
 } from "@shopify/polaris";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
 import {
@@ -24,13 +24,19 @@ import {
   HomeMajor,
   SettingsMajor,
 } from "@shopify/polaris-icons";
+import { getToken } from "../utils/getToken";
 
 export default function FrameExample() {
+  const { push } = useRouter();
+  useEffect(()=>{
+    if(!getToken()){
+      push('/')
+    }
+  },[getToken,push])
   const defaultState = useRef({
     emailFieldValue: "dharma@jadedpixel.com",
     nameFieldValue: "Jaded Pixel",
   });
-  const { push } = useRouter();
   const skipToContentRef = useRef(null);
 
   const [toastActive, setToastActive] = useState(false);

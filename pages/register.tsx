@@ -4,6 +4,7 @@ import { Page, Button, FormLayout, Card } from "@shopify/polaris";
 import { Form, Formik } from "formik";
 import { registerSchema } from "../utils/registerSchema";
 import { useRouter } from "next/router";
+import { useRegisterMutation } from '../graphql/generated/types';
 
 interface valuesType {
   email: string;
@@ -11,11 +12,18 @@ interface valuesType {
   confirmPassword: string;
 }
 
+
 const Register: NextPage = () => {
-  const handleSubmit = (values: valuesType) => {
-    alert(JSON.stringify(values));
-  };
+  const {mutateAsync} =useRegisterMutation({endpoint:'http://localhost:4000/graphql',fetchParams:{headers:{
+    "Content-Type":'application/json'
+  }}});
   const {push}= useRouter()
+  const handleSubmit = async({email , password}: valuesType) => {
+    const data = await mutateAsync({ email, password });
+    if(data.createUser?.status){
+      push('/')
+    }
+  };
   return (
     <Page
       title="Clinic"
